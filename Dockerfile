@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/powershell:lts-7.2-ubuntu-20.04
+FROM mcr.microsoft.com/powershell:lts-ubuntu-22.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -13,6 +13,7 @@ SHELL [ "pwsh", "-command" ]
 RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 RUN Install-Module VMware.PowerCLI,PowerNSX,PowervRA,PSWSMan -Confirm:$False -Force -Scope AllUsers
 RUN Install-WSMan
+RUN Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Scope AllUsers -Confirm:$false
 
 # Launch PowerShell
 ENTRYPOINT ["/usr/bin/pwsh"]
